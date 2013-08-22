@@ -22,5 +22,21 @@
   var CONSTRUCTOR = function () {
     return new Function ("return arguments.callee.Init.call(this,arguments)");
   };
+  
+  BASE.Object = OBJECT({
+    constructor: CONSTRUCTOR(),
+    
+    Subclass: function (def,classdef) {
+      var obj = CONSTRUCTOR();
+      obj.SUPER = this; obj.Init = this.Init;
+      obj.Subclass = this.Subclass; obj.Augment = this.Augment;
+      obj.protoFunction = this.protoFunction;
+      obj.can = this.can; obj.has = this.has; obj.isa = this.isa;
+      obj.prototype = new this(PROTO);
+      obj.prototype.constructor = obj;  // the real constructor
+      obj.Augment(def,classdef);
+      return obj;
+    },
+  );
 
 })("MathJax");
