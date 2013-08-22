@@ -18,5 +18,9 @@
     
     return obj;
   };
+  
+  var CONSTRUCTOR = function () {
+    return new Function ("return arguments.callee.Init.call(this,arguments)");
+  };
 
 })("MathJax");
